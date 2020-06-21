@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Tt // 春洋笔记</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.72.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="http://yang101.gitee.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tt"/>
+<meta name="twitter:description" content="1.初识SpringCloud 微服务是一种架构方式，最终肯定需要技术架构去实施。
+微服务的实现方式很多，但是最火的莫过于Spring Cloud了。为什么？
+后台硬：作为Spring家族的一员，有整个Spring全家桶靠山，背景十分强大。
+技术强：Spring作为Java领域的前辈，可以说是功力深厚。有强力的技术团队支撑，一般人还真比不了
+群众基础好：可以说大多数程序员的成长都伴随着Spring框架，试问：现在有几家公司开发不用Spring？SpringCloud与Spring的各个框架无缝整合，对大家来说一切都是熟悉的配方，熟悉的味道。
+使用方便：相信大家都体会到了SpringBoot给我们开发带来的便利，而SpringCloud完全支持SpringBoot的开发，用很少的配置就能完成微服务框架的搭建
+1.1简介 SpringCloud是Spring旗下的项目之一，
+Spring最擅长的就是集成，把世界上最好的框架拿过来，集成到自己的项目中。
+SpringCloud也是一样，它将现在非常流行的一些技术整合到一起，实现了诸如：配置管理，服务发现，智能路由，负载均衡，熔断器，控制总线，集群状态等等功能。其主要涉及的组件包括：
+Eureka：服务治理组件，包含服务注册中心，服务注册与发现机制的实现。（服务治理，服务注册/发现）
+Zuul：网关组件，提供智能路由，访问过滤功能
+Ribbon：客户端负载均衡的服务调用组件（客户端负载）
+Feign：服务调用，给予Ribbon和Hystrix的声明式服务调用组件 （声明式服务调用）
+Hystrix：容错管理组件，实现断路器模式，帮助服务依赖中出现的延迟和为故障提供强大的容错能力。(熔断、断路器，容错)
+架构图：
+以上只是其中一部分。
+1.2版本 因为Spring Cloud不同其他独立项目，它拥有很多子项目的大项目。所以它的版本是版本名&#43;版本号 （如Angel.SR6）。
+版本名：是伦敦的地铁名
+版本号：SR（Service Releases）是固定的 ,大概意思是稳定版本。后面会有一个递增的数字。
+所以 Edgware.SR3就是Edgware的第3个Release版本。
+我们在项目中，会是以Finchley的版本。
+其中包含的组件，也都有各自的版本，如下表：
+   Component Edgware.SR3 Finchley.RC1 Finchley.BUILD-SNAPSHOT     spring-cloud-aws 1.2.2.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-bus 1.3.2.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-cli 1.4.1.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-commons 1.3.3.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-contract 1.2.4.RELEASE 2.0.0.RC1 2."/>
+
+    <meta property="og:title" content="Tt" />
+<meta property="og:description" content="1.初识SpringCloud 微服务是一种架构方式，最终肯定需要技术架构去实施。
+微服务的实现方式很多，但是最火的莫过于Spring Cloud了。为什么？
+后台硬：作为Spring家族的一员，有整个Spring全家桶靠山，背景十分强大。
+技术强：Spring作为Java领域的前辈，可以说是功力深厚。有强力的技术团队支撑，一般人还真比不了
+群众基础好：可以说大多数程序员的成长都伴随着Spring框架，试问：现在有几家公司开发不用Spring？SpringCloud与Spring的各个框架无缝整合，对大家来说一切都是熟悉的配方，熟悉的味道。
+使用方便：相信大家都体会到了SpringBoot给我们开发带来的便利，而SpringCloud完全支持SpringBoot的开发，用很少的配置就能完成微服务框架的搭建
+1.1简介 SpringCloud是Spring旗下的项目之一，
+Spring最擅长的就是集成，把世界上最好的框架拿过来，集成到自己的项目中。
+SpringCloud也是一样，它将现在非常流行的一些技术整合到一起，实现了诸如：配置管理，服务发现，智能路由，负载均衡，熔断器，控制总线，集群状态等等功能。其主要涉及的组件包括：
+Eureka：服务治理组件，包含服务注册中心，服务注册与发现机制的实现。（服务治理，服务注册/发现）
+Zuul：网关组件，提供智能路由，访问过滤功能
+Ribbon：客户端负载均衡的服务调用组件（客户端负载）
+Feign：服务调用，给予Ribbon和Hystrix的声明式服务调用组件 （声明式服务调用）
+Hystrix：容错管理组件，实现断路器模式，帮助服务依赖中出现的延迟和为故障提供强大的容错能力。(熔断、断路器，容错)
+架构图：
+以上只是其中一部分。
+1.2版本 因为Spring Cloud不同其他独立项目，它拥有很多子项目的大项目。所以它的版本是版本名&#43;版本号 （如Angel.SR6）。
+版本名：是伦敦的地铁名
+版本号：SR（Service Releases）是固定的 ,大概意思是稳定版本。后面会有一个递增的数字。
+所以 Edgware.SR3就是Edgware的第3个Release版本。
+我们在项目中，会是以Finchley的版本。
+其中包含的组件，也都有各自的版本，如下表：
+   Component Edgware.SR3 Finchley.RC1 Finchley.BUILD-SNAPSHOT     spring-cloud-aws 1.2.2.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-bus 1.3.2.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-cli 1.4.1.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-commons 1.3.3.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-contract 1.2.4.RELEASE 2.0.0.RC1 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://yang101.gitee.io/post/tt/" />
+<meta property="article:published_time" content="2020-06-21T09:19:29+08:00" />
+<meta property="article:modified_time" content="2020-06-21T09:19:29+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="http://yang101.gitee.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="John Doe" /></a>
+      <h1>春洋笔记</h1>
+      <p>朝阳热心群众分享.</p>
+      <div class="app-header-social">
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Tt</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jun 21, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          6 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      <h1 id="1初识springcloud"><strong>1.初识SpringCloud</strong></h1>
+<p>微服务是一种架构方式，最终肯定需要技术架构去实施。</p>
+<p>微服务的实现方式很多，但是最火的莫过于Spring Cloud了。为什么？</p>
+<p>后台硬：作为Spring家族的一员，有整个Spring全家桶靠山，背景十分强大。</p>
+<p>技术强：Spring作为Java领域的前辈，可以说是功力深厚。有强力的技术团队支撑，一般人还真比不了</p>
+<p>群众基础好：可以说大多数程序员的成长都伴随着Spring框架，试问：现在有几家公司开发不用Spring？SpringCloud与Spring的各个框架无缝整合，对大家来说一切都是熟悉的配方，熟悉的味道。</p>
+<p>使用方便：相信大家都体会到了SpringBoot给我们开发带来的便利，而SpringCloud完全支持SpringBoot的开发，用很少的配置就能完成微服务框架的搭建</p>
+<h2 id="11简介">1.1<strong>简介</strong></h2>
+<p>SpringCloud是Spring旗下的项目之一，</p>
+<p>Spring最擅长的就是集成，把世界上最好的框架拿过来，集成到自己的项目中。</p>
+<p>SpringCloud也是一样，它将现在非常流行的一些技术整合到一起，实现了诸如：配置管理，服务发现，智能路由，负载均衡，熔断器，控制总线，集群状态等等功能。其主要涉及的组件包括：</p>
+<p>Eureka：服务治理组件，包含服务注册中心，服务注册与发现机制的实现。（服务治理，服务注册/发现）</p>
+<p>Zuul：网关组件，提供智能路由，访问过滤功能</p>
+<p>Ribbon：客户端负载均衡的服务调用组件（客户端负载）</p>
+<p>Feign：服务调用，给予Ribbon和Hystrix的声明式服务调用组件 （声明式服务调用）</p>
+<p>Hystrix：容错管理组件，实现断路器模式，帮助服务依赖中出现的延迟和为故障提供强大的容错能力。(熔断、断路器，容错)</p>
+<p>架构图：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud06.png" alt=""></p>
+<p>以上只是其中一部分。</p>
+<h2 id="12版本">1.2<strong>版本</strong></h2>
+<p>因为Spring Cloud不同其他独立项目，它拥有很多子项目的大项目。所以它的版本是版本名+版本号 （如Angel.SR6）。</p>
+<p>版本名：是伦敦的地铁名</p>
+<p>版本号：SR（Service Releases）是固定的 ,大概意思是稳定版本。后面会有一个递增的数字。</p>
+<p>所以 Edgware.SR3就是Edgware的第3个Release版本。</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud07.png" alt=""></p>
+<p>我们在项目中，会是以Finchley的版本。</p>
+<p>其中包含的组件，也都有各自的版本，如下表：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Component</strong></th>
+<th><strong>Edgware.SR3</strong></th>
+<th><strong>Finchley.RC1</strong></th>
+<th><strong>Finchley.BUILD-SNAPSHOT</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spring-cloud-aws</td>
+<td>1.2.2.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-bus</td>
+<td>1.3.2.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-cli</td>
+<td>1.4.1.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-commons</td>
+<td>1.3.3.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-contract</td>
+<td>1.2.4.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-config</td>
+<td>1.4.3.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-netflix</td>
+<td>1.4.4.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-security</td>
+<td>1.2.2.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-cloudfoundry</td>
+<td>1.1.1.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-consul</td>
+<td>1.3.3.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-sleuth</td>
+<td>1.3.3.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-stream</td>
+<td>Ditmars.SR3</td>
+<td>Elmhurst.RELEASE</td>
+<td>Elmhurst.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-zookeeper</td>
+<td>1.2.1.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-boot</td>
+<td>1.5.10.RELEASE</td>
+<td>2.0.1.RELEASE</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-task</td>
+<td>1.2.2.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.RELEASE</td>
+</tr>
+<tr>
+<td>spring-cloud-vault</td>
+<td>1.1.0.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-gateway</td>
+<td>1.0.1.RELEASE</td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-openfeign</td>
+<td></td>
+<td>2.0.0.RC1</td>
+<td>2.0.0.BUILD-SNAPSHOT</td>
+</tr>
+</tbody>
+</table>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud08.png" alt=""></p>
+<h1 id="2微服务场景模拟">2.<strong>微服务场景模拟</strong></h1>
+<p>首先，我们需要模拟一个服务调用的场景，搭建两个工程：yh-service-provider（服务提供方）和yh-service-consumer（服务调用方）。方便后面学习微服务架构</p>
+<p>服务提供方：使用mybatis操作数据库，实现对数据的增删改查；并对外提供rest接口服务。</p>
+<p>服务消费方：使用restTemplate远程调用服务提供方的rest接口服务，获取数据。</p>
+<h2 id="21服务提供者">2.<strong>1.服务提供者</strong></h2>
+<p>我们新建一个项目：yh-service-provider，对外提供根据id查询用户的服务。</p>
+<h3 id="211spring脚手架创建工程">2.1.1<strong>Spring脚手架创建工程</strong>:</h3>
+<p>借助于Spring提供的快速搭建工具：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud09.png" alt=""></p>
+<p>next&ndash;&gt;填写项目信息：</p>
+<p>next &ndash;&gt; 添加web依赖：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud10.png" alt=""></p>
+<p>添加mybatis依赖：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud10.png" alt=""></p>
+<p>Next &ndash;&gt; 填写项目位置：</p>
+<p>生成的项目结构，已经包含了引导类（YhServiceProviderApplication）：</p>
+<p>依赖也已经全部自动引入：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;groupId&gt;</span>cn.yh.service<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>yh-service-provider<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>0.0.1-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;packaging&gt;</span>jar<span style="color:#f92672">&lt;/packaging&gt;</span>
+
+    <span style="color:#f92672">&lt;name&gt;</span>yh-service-provider<span style="color:#f92672">&lt;/name&gt;</span>
+    <span style="color:#f92672">&lt;description&gt;</span>Demo project for Spring Boot<span style="color:#f92672">&lt;/description&gt;</span>
+
+    <span style="color:#f92672">&lt;parent&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-parent<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>2.0.6.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;relativePath/&gt;</span> <span style="color:#75715e">&lt;!-- lookup parent from repository --&gt;</span>
+    <span style="color:#f92672">&lt;/parent&gt;</span>
+
+    <span style="color:#f92672">&lt;properties&gt;</span>
+        <span style="color:#f92672">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.build.sourceEncoding&gt;</span>
+        <span style="color:#f92672">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.reporting.outputEncoding&gt;</span>
+        <span style="color:#f92672">&lt;java.version&gt;</span>1.8<span style="color:#f92672">&lt;/java.version&gt;</span>
+    <span style="color:#f92672">&lt;/properties&gt;</span>
+
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-jdbc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.spring.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.3.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>runtime<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-test<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#75715e">&lt;!-- 需要手动引入通用mapper的启动器，spring没有收录该依赖 --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>tk.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mapper-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>2.0.4<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+    <span style="color:#f92672">&lt;build&gt;</span>
+        <span style="color:#f92672">&lt;plugins&gt;</span>
+            <span style="color:#f92672">&lt;plugin&gt;</span>
+                <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+                <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;/plugin&gt;</span>
+        <span style="color:#f92672">&lt;/plugins&gt;</span>
+    <span style="color:#f92672">&lt;/build&gt;</span>
+<span style="color:#f92672">&lt;/project&gt;</span>
+</code></pre></div><p>当然，因为要使用通用mapper，所以我们<strong>需要手动加一条依赖</strong>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>tk.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>mapper-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>2.0.4<span style="color:#f92672">&lt;/version&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><h3 id="212编写代码">2.12<strong>编写代码</strong></h3>
+<h4 id="2121配置">2.<strong>1.2.1.配置</strong></h4>
+<p>属性文件,这里我们采用了yaml语法，而不是properties：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">server</span>:
+  <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">8081</span>
+<span style="color:#66d9ef">spring</span>:
+  <span style="color:#66d9ef">datasource</span>:
+    <span style="color:#66d9ef">url</span>: jdbc:mysql://localhost:<span style="color:#ae81ff">3306</span>/dsh
+    <span style="color:#66d9ef">username</span>: root
+    <span style="color:#66d9ef">password</span>: root
+<span style="color:#66d9ef">mybatis</span>:
+  <span style="color:#66d9ef">type-aliases-package</span>: cn.yh.service.pojo
+</code></pre></div><h4 id="2122实体类">2.<strong>1.2.2.实体类</strong></h4>
+<h4 id="2123usermapper">2**.1.2.3.UserMapper**</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Mapper</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserMapper</span> <span style="color:#66d9ef">extends</span> tk<span style="color:#f92672">.</span><span style="color:#a6e22e">mybatis</span><span style="color:#f92672">.</span><span style="color:#a6e22e">mapper</span><span style="color:#f92672">.</span><span style="color:#a6e22e">common</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Mapper</span><span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;{</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="2124userservice">2**.1.2.4.UserService**</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Service</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserService</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> UserMapper userMapper<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> User <span style="color:#a6e22e">queryById</span><span style="color:#f92672">(</span>Long id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">userMapper</span><span style="color:#f92672">.</span><span style="color:#a6e22e">selectByPrimaryKey</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="2125usercontroller">2**.1.2.5.UserController**</h4>
+<p>添加一个对外查询的接口：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RestController</span>
+<span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserController</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> UserService userService<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;{id}&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> User <span style="color:#a6e22e">queryById</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">)</span> Long id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">userService</span><span style="color:#f92672">.</span><span style="color:#a6e22e">queryById</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="213启动并测试">2**.1.3.启动并测试**</h3>
+<h2 id="22服务调用者"><strong>2.2.服务调用者</strong></h2>
+<h3 id="221创建工程"><strong>2.2.1.创建工程</strong></h3>
+<p>与上面类似，这里不再赘述，需要注意的是，我们调用yh-service-provider的解耦获取数据，因此不需要mybatis相关依赖了</p>
+<p>pom：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;groupId&gt;</span>cn.yh.service<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>yh-service-consumer<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>0.0.1-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;packaging&gt;</span>jar<span style="color:#f92672">&lt;/packaging&gt;</span>
+
+    <span style="color:#f92672">&lt;name&gt;</span>yh-service-consumer<span style="color:#f92672">&lt;/name&gt;</span>
+    <span style="color:#f92672">&lt;description&gt;</span>Demo project for Spring Boot<span style="color:#f92672">&lt;/description&gt;</span>
+
+    <span style="color:#f92672">&lt;parent&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-parent<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>2.0.4.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;relativePath/&gt;</span> <span style="color:#75715e">&lt;!-- lookup parent from repository --&gt;</span>
+    <span style="color:#f92672">&lt;/parent&gt;</span>
+
+    <span style="color:#f92672">&lt;properties&gt;</span>
+        <span style="color:#f92672">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.build.sourceEncoding&gt;</span>
+        <span style="color:#f92672">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.reporting.outputEncoding&gt;</span>
+        <span style="color:#f92672">&lt;java.version&gt;</span>1.8<span style="color:#f92672">&lt;/java.version&gt;</span>
+    <span style="color:#f92672">&lt;/properties&gt;</span>
+
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-test<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+
+    <span style="color:#f92672">&lt;build&gt;</span>
+        <span style="color:#f92672">&lt;plugins&gt;</span>
+            <span style="color:#f92672">&lt;plugin&gt;</span>
+                <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+                <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;/plugin&gt;</span>
+        <span style="color:#f92672">&lt;/plugins&gt;</span>
+    <span style="color:#f92672">&lt;/build&gt;</span>
+
+<span style="color:#f92672">&lt;/project&gt;</span>
+</code></pre></div><h3 id="222编写代码">2**.2.2.编写代码**</h3>
+<p>首先在引导类中注册RestTemplate：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@SpringBootApplication</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">YhServiceConsumerApplication</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Bean</span>
+    <span style="color:#66d9ef">public</span> RestTemplate <span style="color:#a6e22e">restTemplate</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> RestTemplate<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        SpringApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">(</span>yhServiceConsumerApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span> args<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>编写配置（application.yml）：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">server</span>:
+  <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">80</span>
+</code></pre></div><p>编写UserController：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Controller</span>
+<span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;consumer/user&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserController</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> RestTemplate restTemplate<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@GetMapping</span>
+    <span style="color:#a6e22e">@ResponseBody</span>
+    <span style="color:#66d9ef">public</span> User <span style="color:#a6e22e">queryUserById</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">)</span> Long id<span style="color:#f92672">){</span>
+        User user <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">restTemplate</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getForObject</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;http://localhost:8081/user/&#34;</span> <span style="color:#f92672">+</span> id<span style="color:#f92672">,</span> User<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> user<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><p>pojo对象（User）：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#66d9ef">implements</span> Serializable <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> serialVersionUID <span style="color:#f92672">=</span> 1L<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">private</span> Long id<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// 用户名
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> String userName<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// 密码
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> String password<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// 姓名
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// 年龄
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> Integer age<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// 性别，1男性，2女性
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> Integer sex<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// 出生日期
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> Date birthday<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// 创建时间
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> Date created<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// 更新时间
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> Date updated<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> Long <span style="color:#a6e22e">getId</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> id<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>Long id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> id<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getUserName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> userName<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setUserName</span><span style="color:#f92672">(</span>String userName<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">userName</span> <span style="color:#f92672">=</span> userName<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getPassword</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> password<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setPassword</span><span style="color:#f92672">(</span>String password<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">password</span> <span style="color:#f92672">=</span> password<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Integer <span style="color:#a6e22e">getAge</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> age<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setAge</span><span style="color:#f92672">(</span>Integer age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Integer <span style="color:#a6e22e">getSex</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> sex<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setSex</span><span style="color:#f92672">(</span>Integer sex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sex</span> <span style="color:#f92672">=</span> sex<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Date <span style="color:#a6e22e">getBirthday</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> birthday<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setBirthday</span><span style="color:#f92672">(</span>Date birthday<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">birthday</span> <span style="color:#f92672">=</span> birthday<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Date <span style="color:#a6e22e">getCreated</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> created<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setCreated</span><span style="color:#f92672">(</span>Date created<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">created</span> <span style="color:#f92672">=</span> created<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Date <span style="color:#a6e22e">getUpdated</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> updated<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setUpdated</span><span style="color:#f92672">(</span>Date updated<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">updated</span> <span style="color:#f92672">=</span> updated<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="223启动测试">2**.2.3.启动测试**</h3>
+<p>因为我们没有配置端口，那么默认就是8080，我们访问mal;text-tr��8;hy</p>
+<p><a href="http://localhost/consumer/user?id=1">http://localhost/consumer/user?id=1</a></p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud11.png" alt=""></p>
+<p>一个简单的远程服务调用案例就实现了</p>
+<h2 id="23有没有问题"><strong>2.3.有没有问题？</strong></h2>
+<p>简单回顾一下，刚才我们写了什么：</p>
+<p>yh-service-provider：一个提供根据id查询用户的微服务。</p>
+<p>yh-service-consumer：一个服务调用者，通过RestTemplate远程调用yh-service-provider。</p>
+<p>存在什么问题？</p>
+<p>在consumer中，我们把url地址硬编码到了代码中，不方便后期维护</p>
+<p>consumer需要记忆provider的地址，如果出现变更，可能得不到通知，地址将失效</p>
+<p>consumer不清楚provider的状态，服务宕机也不知道</p>
+<p>provider只有1台服务，不具备高可用性</p>
+<p>即便provider形成集群，consumer还需自己实现负载均衡</p>
+<p>其实上面说的问题，概括一下就是分布式服务必然要面临的问题：</p>
+<p>服务管理</p>
+<p>如何自动注册和发现</p>
+<p>如何实现状态监管</p>
+<p>如何实现动态路由</p>
+<p>服务如何实现负载均衡</p>
+<p>服务如何解决容灾问题</p>
+<p>服务如何实现统一配置</p>
+<h1 id="3eureka注册中心">3**.Eureka注册中心**</h1>
+<h2 id="31认识eureka">3**.1.认识Eureka**</h2>
+<p>首先我们来解决第一问题，服务的管理。</p>
+<p>问题分析</p>
+<p>在刚才的案例中，yh-service-provider对外提供服务，需要对外暴露自己的地址。而consumer（调用者）需要记录服务提供者的地址。将来地址出现变更，还需要及时更新。这在服务较少的时候并不觉得有什么，但是在现在日益复杂的互联网环境，一个项目肯定会拆分出十几，甚至数十个微服务。此时如果还人为管理地址，不仅开发困难，将来测试、发布上线都会非常麻烦，这与DevOps的思想是背道而驰的。</p>
+<p>网约车</p>
+<p>这就好比是 网约车出现以前，人们出门叫车只能叫出租车。一些私家车想做出租却没有资格，被称为黑车。而很多人想要约车，但是无奈出租车太少，不方便。私家车很多却不敢拦，而且满大街的车，谁知道哪个才是愿意载人的。一个想要，一个愿意给，就是缺少引子，缺乏管理啊。</p>
+<p>此时滴滴这样的网约车平台出现了，所有想载客的私家车全部到滴滴注册，记录你的车型（服务类型），身份信息（联系方式）。这样提供服务的私家车，在滴滴那里都能找到，一目了然。</p>
+<p>此时要叫车的人，只需要打开APP，输入你的目的地，选择车型（服务类型），滴滴自动安排一个符合需求的车到你面前，为你服务，完美！</p>
+<p>Eureka做什么？</p>
+<p>Eureka就好比是滴滴，负责管理、记录服务提供者的信息。服务调用者无需自己寻找服务，而是把自己的需求告诉Eureka，然后Eureka会把符合你需求的服务告诉你。</p>
+<p>同时，服务提供方与Eureka之间通过“心跳”机制进行监控，当某个服务提供方出现问题，Eureka自然会把它从服务列表中剔除。</p>
+<p>这就实现了服务的自动注册、发现、状态监控。</p>
+<h2 id="32原理图"><strong>3.2.原理图</strong></h2>
+<p>基本架构:</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud12.png" alt=""></p>
+<p>Eureka：就是服务注册中心（可以是一个集群），对外暴露自己的地址</p>
+<p>提供者：启动后向Eureka注册自己信息（地址，提供什么服务）</p>
+<p>消费者：向Eureka订阅服务，Eureka会将对应服务的所有提供者地址列表发送给消费者，并且定期更新</p>
+<p>心跳(续约)：提供者定期通过http方式向Eureka刷新自己的状态</p>
+<h2 id="33入门案例">3**.3.入门案例**</h2>
+<h2 id="331搭建eurekaserver">3**.3.1.搭建EurekaServer**</h2>
+<h3 id="331搭建eurekaserver-1"><strong>3.3.1.搭建EurekaServer</strong></h3>
+<p>接下来我们创建一个项目，启动一个EurekaServer：</p>
+<p>依然使用spring提供的快速搭建工具：</p>
+<p>选择依赖：EurekaServer-服务注册中心依赖，Eureka Discovery-服务提供方和服务消费方。因为，对于eureka来说：服务提供方和服务消费方都属于客户端</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud13.png" alt=""></p>
+<p>完整的Pom文件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;groupId&gt;</span>cn.yh.eureka<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>yh-eureka<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>0.0.1-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;packaging&gt;</span>jar<span style="color:#f92672">&lt;/packaging&gt;</span>
+
+    <span style="color:#f92672">&lt;name&gt;</span>yh-eureka<span style="color:#f92672">&lt;/name&gt;</span>
+    <span style="color:#f92672">&lt;description&gt;</span>Demo project for Spring Boot<span style="color:#f92672">&lt;/description&gt;</span>
+
+    <span style="color:#f92672">&lt;parent&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-parent<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>2.0.6.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;relativePath/&gt;</span> <span style="color:#75715e">&lt;!-- lookup parent from repository --&gt;</span>
+    <span style="color:#f92672">&lt;/parent&gt;</span>
+
+    <span style="color:#f92672">&lt;properties&gt;</span>
+        <span style="color:#f92672">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.build.sourceEncoding&gt;</span>
+        <span style="color:#f92672">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.reporting.outputEncoding&gt;</span>
+        <span style="color:#f92672">&lt;java.version&gt;</span>1.8<span style="color:#f92672">&lt;/java.version&gt;</span>
+        <span style="color:#f92672">&lt;spring-cloud.version&gt;</span>Finchley.SR2<span style="color:#f92672">&lt;/spring-cloud.version&gt;</span>
+    <span style="color:#f92672">&lt;/properties&gt;</span>
+
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-server<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+
+    <span style="color:#f92672">&lt;build&gt;</span>
+        <span style="color:#f92672">&lt;plugins&gt;</span>
+            <span style="color:#f92672">&lt;plugin&gt;</span>
+                <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+                <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;/plugin&gt;</span>
+        <span style="color:#f92672">&lt;/plugins&gt;</span>
+    <span style="color:#f92672">&lt;/build&gt;</span>
+
+<span style="color:#f92672">&lt;/project&gt;</span>
+
+</code></pre></div><p>编写application.yml配置：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">server</span>:
+
+  <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">10086</span> <span style="color:#75715e"># 端口</span>
+
+<span style="color:#66d9ef">spring</span>:
+
+  <span style="color:#66d9ef">application</span>:
+
+    <span style="color:#66d9ef">name</span>: eureka-server <span style="color:#75715e"># 应用名称，会在Eureka中显示</span>
+
+<span style="color:#66d9ef">eureka</span>:
+
+  <span style="color:#66d9ef">client</span>:
+
+    <span style="color:#66d9ef">service-url</span>: <span style="color:#75715e"># EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。</span>
+
+      <span style="color:#66d9ef">defaultZone</span>: http://<span style="color:#ae81ff">127.0.0.1</span>:${server.port}/eureka
+
+</code></pre></div><p>修改引导类，在类上添加@EnableEurekaServer注解：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@SpringBootApplication</span>
+<span style="color:#a6e22e">@EnableEurekaServer</span> <span style="color:#75715e">// 声明当前springboot应用是一个eureka服务中心
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">yhEurekaApplication</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        SpringApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">(</span>yhEurekaApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span> args<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>启动服务，并访问：<a href="http://127.0.0.1:10086">http://127.0.0.1:10086</a></p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud14.png" alt=""></p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud15.png" alt=""></p>
+<h3 id="332注册到eureka">3**.3.2.注册到Eureka**</h3>
+<p>注册服务，就是在服务上添加Eureka的客户端依赖，客户端代码会自动把服务注册到EurekaServer中。</p>
+<p>修改yh-service-provider工程</p>
+<p>在pom.xml中，添加springcloud的相关依赖。</p>
+<p>在application.yml中，添加springcloud的相关依赖。</p>
+<p>在引导类上添加注解，把服务注入到eureka注册中心。</p>
+<p>具体操作</p>
+<h4 id="3321pomxml"><strong>3.3.2.1.pom.xml</strong></h4>
+<p>参照yh-eureka，先添加SpringCloud依赖:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- SpringCloud的依赖 --&gt;</span>
+<span style="color:#f92672">&lt;dependencyManagement&gt;</span>
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-dependencies<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>Finchley.SR2<span style="color:#f92672">&lt;/version&gt;</span>
+            <span style="color:#f92672">&lt;type&gt;</span>pom<span style="color:#f92672">&lt;/type&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>import<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+<span style="color:#f92672">&lt;/dependencyManagement&gt;</span>
+</code></pre></div><p>然后是Eureka客户端：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- Eureka客户端 --&gt;</span>
+<span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span style="color:#f92672">&lt;/artifactId&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>s
+</code></pre></div><p>完整pom.xml:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;groupId&gt;</span>cn.yh.service<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>yh-service-provider<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>0.0.1-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;packaging&gt;</span>jar<span style="color:#f92672">&lt;/packaging&gt;</span>
+
+    <span style="color:#f92672">&lt;name&gt;</span>yh-service-provider<span style="color:#f92672">&lt;/name&gt;</span>
+    <span style="color:#f92672">&lt;description&gt;</span>Demo project for Spring Boot<span style="color:#f92672">&lt;/description&gt;</span>
+
+    <span style="color:#f92672">&lt;parent&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-parent<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>2.0.6.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;relativePath/&gt;</span> <span style="color:#75715e">&lt;!-- lookup parent from repository --&gt;</span>
+    <span style="color:#f92672">&lt;/parent&gt;</span>
+
+    <span style="color:#f92672">&lt;properties&gt;</span>
+        <span style="color:#f92672">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.build.sourceEncoding&gt;</span>
+        <span style="color:#f92672">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.reporting.outputEncoding&gt;</span>
+        <span style="color:#f92672">&lt;java.version&gt;</span>1.8<span style="color:#f92672">&lt;/java.version&gt;</span>
+    <span style="color:#f92672">&lt;/properties&gt;</span>
+
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-jdbc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.spring.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.3.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>runtime<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-test<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>tk.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mapper-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>2.0.4<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+
+    <span style="color:#f92672">&lt;build&gt;</span>
+        <span style="color:#f92672">&lt;plugins&gt;</span>
+            <span style="color:#f92672">&lt;plugin&gt;</span>
+                <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+                <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;/plugin&gt;</span>
+        <span style="color:#f92672">&lt;/plugins&gt;</span>
+    <span style="color:#f92672">&lt;/build&gt;</span>
+
+    <span style="color:#f92672">&lt;dependencyManagement&gt;</span>
+        <span style="color:#f92672">&lt;dependencies&gt;</span>
+            <span style="color:#f92672">&lt;dependency&gt;</span>
+                <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+                <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-dependencies<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                <span style="color:#f92672">&lt;version&gt;</span>Finchley.SR2<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#f92672">&lt;type&gt;</span>pom<span style="color:#f92672">&lt;/type&gt;</span>
+                <span style="color:#f92672">&lt;scope&gt;</span>import<span style="color:#f92672">&lt;/scope&gt;</span>
+            <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;/dependencies&gt;</span>
+    <span style="color:#f92672">&lt;/dependencyManagement&gt;</span>
+
+<span style="color:#f92672">&lt;/project&gt;</span>
+</code></pre></div><h4 id="3322applicationyml"><strong>3.3.2.2.application.yml</strong></h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">server</span>:
+  <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">8081</span>
+<span style="color:#66d9ef">spring</span>:
+  <span style="color:#66d9ef">datasource</span>:
+    <span style="color:#66d9ef">url</span>: jdbc:mysql://localhost:<span style="color:#ae81ff">3306</span>/dsh
+    <span style="color:#66d9ef">username</span>: root
+    <span style="color:#66d9ef">password</span>: root
+    <span style="color:#66d9ef">driverClassName</span>: com.mysql.jdbc.Driver
+  <span style="color:#66d9ef">application</span>:
+    <span style="color:#66d9ef">name</span>: service-provider <span style="color:#75715e"># 应用名称，注册到eureka后的服务名称</span>
+<span style="color:#66d9ef">mybatis</span>:
+  <span style="color:#66d9ef">type-aliases-package</span>: cn.yh.service.pojo
+<span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">client</span>:
+    <span style="color:#66d9ef">service-url</span>: <span style="color:#75715e"># EurekaServer地址</span>
+      <span style="color:#66d9ef">defaultZone</span>: http://<span style="color:#ae81ff">127.0.0.1</span>:<span style="color:#ae81ff">10086</span>/eureka
+</code></pre></div><p>注意：</p>
+<p>这里我们添加了spring.application.name属性来指定应用名称，将来会作为应用的id使用。</p>
+<h4 id="3323引导类"><strong>3.3.2.3.引导类</strong></h4>
+<p>在引导类上开启Eureka客户端功能</p>
+<p>通过添加@EnableDiscoveryClient来开启Eureka客户端功能</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@SpringBootApplication</span>
+<span style="color:#a6e22e">@EnableDiscoveryClient</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">yhServiceProviderApplication</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        SpringApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">(</span>yhServiceApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span> args<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>重启项目，访问<a href="http://127.0.0.1:10086">Eureka监控页面</a>查看</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud16.png" alt=""></p>
+<p>我们发现service-provider服务已经注册成功了</p>
+<h3 id="333从eureka获取服务"><strong>3.3.3.从Eureka获取服务</strong></h3>
+<h3 id="533从eureka获取服务"><strong>5.3.3.从Eureka获取服务</strong></h3>
+<p>接下来我们修改yh-service-consumer，尝试从EurekaServer获取服务。</p>
+<p>方法与消费者类似，只需要在项目中添加EurekaClient依赖，就可以通过服务名称来获取信息了！</p>
+<p>pom.xml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;groupId&gt;</span>cn.yh.service<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>yh-service-consumer<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>0.0.1-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;packaging&gt;</span>jar<span style="color:#f92672">&lt;/packaging&gt;</span>
+
+    <span style="color:#f92672">&lt;name&gt;</span>yh-service-consumer<span style="color:#f92672">&lt;/name&gt;</span>
+    <span style="color:#f92672">&lt;description&gt;</span>Demo project for Spring Boot<span style="color:#f92672">&lt;/description&gt;</span>
+
+    <span style="color:#f92672">&lt;parent&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-parent<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>2.0.6.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;relativePath/&gt;</span> <span style="color:#75715e">&lt;!-- lookup parent from repository --&gt;</span>
+    <span style="color:#f92672">&lt;/parent&gt;</span>
+
+    <span style="color:#f92672">&lt;properties&gt;</span>
+        <span style="color:#f92672">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.build.sourceEncoding&gt;</span>
+        <span style="color:#f92672">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.reporting.outputEncoding&gt;</span>
+        <span style="color:#f92672">&lt;java.version&gt;</span>1.8<span style="color:#f92672">&lt;/java.version&gt;</span>
+    <span style="color:#f92672">&lt;/properties&gt;</span>
+
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-test<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#75715e">&lt;!-- Eureka客户端 --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+
+    <span style="color:#f92672">&lt;build&gt;</span>
+        <span style="color:#f92672">&lt;plugins&gt;</span>
+            <span style="color:#f92672">&lt;plugin&gt;</span>
+                <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+                <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;/plugin&gt;</span>
+        <span style="color:#f92672">&lt;/plugins&gt;</span>
+    <span style="color:#f92672">&lt;/build&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- SpringCloud的依赖 --&gt;</span>
+    <span style="color:#f92672">&lt;dependencyManagement&gt;</span>
+        <span style="color:#f92672">&lt;dependencies&gt;</span>
+            <span style="color:#f92672">&lt;dependency&gt;</span>
+                <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+                <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-dependencies<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                <span style="color:#f92672">&lt;version&gt;</span>Finchley.SR2<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#f92672">&lt;type&gt;</span>pom<span style="color:#f92672">&lt;/type&gt;</span>
+                <span style="color:#f92672">&lt;scope&gt;</span>import<span style="color:#f92672">&lt;/scope&gt;</span>
+            <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;/dependencies&gt;</span>
+    <span style="color:#f92672">&lt;/dependencyManagement&gt;</span>
+<span style="color:#f92672">&lt;/project&gt;</span>
+</code></pre></div><p>修改配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">server</span>:
+  <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">80</span>
+<span style="color:#66d9ef">spring</span>:
+  <span style="color:#66d9ef">application</span>:
+    <span style="color:#66d9ef">name</span>: service-consumer
+<span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">client</span>:
+    <span style="color:#66d9ef">service-url</span>:
+      <span style="color:#66d9ef">defaultZone</span>: http://localhost:<span style="color:#ae81ff">10086</span>/eureka
+</code></pre></div><p>在启动类开启Eureka客户端</p>
+<pre><code class="language-javas" data-lang="javas">@SpringBootApplication
+@EnableDiscoveryClient // 开启Eureka客户端
+public class yhServiceConsumerApplication {
+
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(yhServiceConsumerApplication.class, args);
+    }
+}
+</code></pre><p>修改UserController代码，用DiscoveryClient类的方法，根据服务名称，获取服务实例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Controller</span>
+<span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;consumer/user&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserController</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> RestTemplate restTemplate<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> DiscoveryClient discoveryClient<span style="color:#f92672">;</span> <span style="color:#75715e">// eureka客户端，可以获取到eureka中服务的信息
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">@GetMapping</span>
+    <span style="color:#a6e22e">@ResponseBody</span>
+    <span style="color:#66d9ef">public</span> User <span style="color:#a6e22e">queryUserById</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@RequestParam</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">)</span> Long id<span style="color:#f92672">){</span>
+        <span style="color:#75715e">// 根据服务名称，获取服务实例。有可能是集群，所以是service实例集合
+</span><span style="color:#75715e"></span>        List<span style="color:#f92672">&lt;</span>ServiceInstance<span style="color:#f92672">&gt;</span> instances <span style="color:#f92672">=</span> discoveryClient<span style="color:#f92672">.</span><span style="color:#a6e22e">getInstances</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;service-provider&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 因为只有一个Service-provider。所以获取第一个实例
+</span><span style="color:#75715e"></span>        ServiceInstance instance <span style="color:#f92672">=</span> instances<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>0<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 获取ip和端口信息，拼接成服务地址
+</span><span style="color:#75715e"></span>        String baseUrl <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://&#34;</span> <span style="color:#f92672">+</span> instance<span style="color:#f92672">.</span><span style="color:#a6e22e">getHost</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;:&#34;</span> <span style="color:#f92672">+</span> instance<span style="color:#f92672">.</span><span style="color:#a6e22e">getPort</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/user/&#34;</span> <span style="color:#f92672">+</span> id<span style="color:#f92672">;</span>
+        User user <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">restTemplate</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getForObject</span><span style="color:#f92672">(</span>baseUrl<span style="color:#f92672">,</span> User<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> user<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><p>5）Debug跟踪运行：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud17.png" alt=""></p>
+<p>生成的URL：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud18.png" alt=""></p>
+<p>访问结果：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud19.png" alt=""></p>
+<h2 id="34eureka详解"><strong>3.4.Eureka详解</strong></h2>
+<p>接下来我们详细讲解Eureka的原理及配置。</p>
+<h3 id="341基础架构"><strong>3.4.1.基础架构</strong></h3>
+<p>Eureka架构中的三个核心角色：</p>
+<p>服务注册中心</p>
+<p>Eureka的服务端应用，提供服务注册和发现功能，就是刚刚我们建立的yh-eureka。</p>
+<p>服务提供者</p>
+<p>提供服务的应用，可以是SpringBoot应用，也可以是其它任意技术实现，只要对外提供的是Rest风格服务即可。本例中就是我们实现的yh-service-provider。</p>
+<p>服务消费者</p>
+<p>消费应用从注册中心获取服务列表，从而得知每个服务方的信息，知道去哪里调用服务方。本例中就是我们实现的yh-service-consumer。</p>
+<h3 id="342高可用的eureka-server"><strong>3.4.2.高可用的Eureka Server</strong></h3>
+<p>Eureka Server即服务的注册中心，在刚才的案例中，我们只有一个EurekaServer，事实上EurekaServer也可以是一个集群，形成高可用的Eureka中心。</p>
+<p>服务同步</p>
+<p>多个Eureka Server之间也会互相注册为服务，当服务提供者注册到Eureka Server集群中的某个节点时，该节点会把服务的信息同步给集群中的每个节点，从而实现<strong>数据同步</strong>。因此，无论客户端访问到Eureka Server集群中的任意一个节点，都可以获取到完整的服务列表信息。</p>
+<p>动手搭建高可用的EurekaServer</p>
+<p>我们假设要运行两个EurekaServer的集群，端口分别为：10086和10087。只需要把yh-eureka启动两次即可。</p>
+<p>1）启动第一个eurekaServer，我们修改原来的EurekaServer配置：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">server</span>:
+  <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">10086</span> <span style="color:#75715e"># 端口</span>
+<span style="color:#66d9ef">spring</span>:
+  <span style="color:#66d9ef">application</span>:
+    <span style="color:#66d9ef">name</span>: eureka-server <span style="color:#75715e"># 应用名称，会在Eureka中显示</span>
+<span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">client</span>:
+    <span style="color:#66d9ef">service-url</span>: <span style="color:#75715e"># 配置其他Eureka服务的地址，而不是自己，比如10087</span>
+      <span style="color:#66d9ef">defaultZone</span>: http://<span style="color:#ae81ff">127.0.0.1</span>:<span style="color:#ae81ff">10087</span>/eureka
+</code></pre></div><p>所谓的高可用注册中心，其实就是把EurekaServer自己也作为一个服务进行注册，这样多个EurekaServer之间就能互相发现对方，从而形成集群。因此我们做了以下修改：</p>
+<p>·</p>
+<p>把service-url的值改成了另外一台EurekaServer的地址，而不是自己</p>
+<p>·</p>
+<p>启动报错，很正常。因为10087服务没有启动：</p>
+<p>2）启动第二个eurekaServer，再次修改yh-eureka的配置：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">server</span>:
+  <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">10087</span> <span style="color:#75715e"># 端口</span>
+<span style="color:#66d9ef">spring</span>:
+  <span style="color:#66d9ef">application</span>:
+    <span style="color:#66d9ef">name</span>: eureka-server <span style="color:#75715e"># 应用名称，会在Eureka中显示</span>
+<span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">client</span>:
+    <span style="color:#66d9ef">service-url</span>: <span style="color:#75715e"># 配置其他Eureka服务的地址，而不是自己，比如10087</span>
+      <span style="color:#66d9ef">defaultZone</span>: http://<span style="color:#ae81ff">127.0.0.1</span>:<span style="color:#ae81ff">10086</span>/eureka
+</code></pre></div><p>注意：idea中一个应用不能启动两次，我们需要重新配置一个启动器：</p>
+<p>然后启动即可。</p>
+<p>3）访问集群，测试：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud20.png" alt=""></p>
+<p>4）客户端注册服务到集群</p>
+<p>因为EurekaServer不止一个，因此注册服务的时候，service-url参数需要变化：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">client</span>:
+    <span style="color:#66d9ef">service-url</span>: <span style="color:#75715e"># EurekaServer地址,多个地址以&#39;,&#39;隔开</span>
+      <span style="color:#66d9ef">defaultZone</span>: http://<span style="color:#ae81ff">127.0.0.1</span>:<span style="color:#ae81ff">10086</span>/eureka,http://<span style="color:#ae81ff">127.0.0.1</span>:<span style="color:#ae81ff">10087</span>/eureka
+</code></pre></div><p>10086：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud21.png" alt=""></p>
+<p>10087:</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud22.png" alt=""></p>
+<h3 id="343服务提供者"><strong>3.4.3.服务提供者</strong></h3>
+<p>服务提供者要向EurekaServer注册服务，并且完成服务续约等工作。</p>
+<p>服务注册</p>
+<p>服务提供者在启动时，会检测配置属性中的：eureka.client.register-with-eureka=true参数是否正确，事实上默认就是true。如果值确实为true，则会向EurekaServer发起一个Rest请求，并携带自己的元数据信息，Eureka Server会把这些信息保存到一个双层Map结构中。</p>
+<p>第一层Map的Key就是服务id，一般是配置中的spring.application.name属性</p>
+<p>第二层Map的key是服务的实例id。一般host+ serviceId + port，例如：locahost:service-provider:8081</p>
+<p>值则是服务的实例对象，也就是说一个服务，可以同时启动多个不同实例，形成集群。</p>
+<p>服务续约</p>
+<p>在注册服务完成以后，服务提供者会维持一个心跳（定时向EurekaServer发起Rest请求），告诉EurekaServer：“我还活着”。这个我们称为服务的续约（renew）；</p>
+<p>有两个重要参数可以修改服务续约的行为：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">instance</span>:
+    <span style="color:#66d9ef">lease-expiration-duration-in-seconds</span>: <span style="color:#ae81ff">90</span>
+    <span style="color:#66d9ef">lease-renewal-interval-in-seconds</span>: <span style="color:#ae81ff">30</span>
+</code></pre></div><p>lease-renewal-interval-in-seconds：服务续约(renew)的间隔，默认为30秒</p>
+<p>lease-expiration-duration-in-seconds：服务失效时间，默认值90秒</p>
+<p>也就是说，默认情况下每个30秒服务会向注册中心发送一次心跳，证明自己还活着。如果超过90秒没有发送心跳，EurekaServer就会认为该服务宕机，会从服务列表中移除，这两个值在生产环境不要修改，默认即可。</p>
+<p>但是在开发时，这个值有点太长了，经常我们关掉一个服务，会发现Eureka依然认为服务在活着。所以我们在开发阶段可以适当调小。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">instance</span>:
+    <span style="color:#66d9ef">lease-expiration-duration-in-seconds</span>: <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 10秒即过期</span>
+    <span style="color:#66d9ef">lease-renewal-interval-in-seconds</span>: <span style="color:#ae81ff">5</span> <span style="color:#75715e"># 5秒一次心跳</span>
+</code></pre></div><h3 id="344服务消费者"><strong>3.4.4.服务消费者</strong></h3>
+<p>获取服务列表</p>
+<p>当服务消费者启动时，会检测eureka.client.fetch-registry=true参数的值，如果为true，则会拉取Eureka Server服务的列表只读备份，然后缓存在本地。并且每隔30秒会重新获取并更新数据。我们可以通过下面的参数来修改：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">client</span>:
+    <span style="color:#66d9ef">registry-fetch-interval-seconds</span>: <span style="color:#ae81ff">5</span>
+</code></pre></div><p>生产环境中，我们不需要修改这个值。</p>
+<p>但是为了开发环境下，能够快速得到服务的最新状态，我们可以将其设置小一点。</p>
+<h3 id="345失效剔除和自我保护"><strong>3.4.5.失效剔除和自我保护</strong></h3>
+<p>服务下线</p>
+<p>当服务进行正常关闭操作时，它会触发一个服务下线的REST请求给Eureka Server，告诉服务注册中心：“我要下线了”。服务中心接受到请求之后，将该服务置为下线状态。</p>
+<p>失效剔除</p>
+<p>有些时候，我们的服务提供方并不一定会正常下线，可能因为内存溢出、网络故障等原因导致服务无法正常工作。Eureka Server需要将这样的服务剔除出服务列表。因此它会开启一个定时任务，每隔60秒对所有失效的服务（超过90秒未响应）进行剔除。</p>
+<p>可以通过eureka.server.eviction-interval-timer-in-ms参数对其进行修改，单位是毫秒，生产环境不要修改。</p>
+<p>这个会对我们开发带来极大的不变，你对服务重启，隔了60秒Eureka才反应过来。开发阶段可以适当调整，比如：10秒</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/imgs/springcloud23.png" alt=""></p>
+<p>自我保护</p>
+<p>我们关停一个服务，就会在Eureka面板看到一条警告：</p>
+<p><img src="E:/%E7%A7%BB%E5%8A%A8/%E9%9A%8F%E7%AC%94/imgs/springcloud24.png" alt=""></p>
+<p>这是触发了Eureka的自我保护机制。当一个服务未按时进行心跳续约时，Eureka会统计最近15分钟心跳失败的服务实例的比例是否超过了85%。在生产环境下，因为网络延迟等原因，心跳失败实例的比例很有可能超标，但是此时就把服务剔除列表并不妥当，因为服务可能没有宕机。Eureka就会把当前实例的注册信息保护起来，不予剔除。生产环境下这很有效，保证了大多数服务依然可用。</p>
+<p>但是这给我们的开发带来了麻烦， 因此开发阶段我们都会关闭自我保护模式：（yh-eureka）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">eureka</span>:
+  <span style="color:#66d9ef">server</span>:
+    <span style="color:#66d9ef">enable-self-preservation</span>: <span style="color:#66d9ef">false</span> <span style="color:#75715e"># 关闭自我保护模式（缺省为打开）</span>
+    <span style="color:#66d9ef">eviction-interval-timer-in-ms</span>: <span style="color:#ae81ff">1000</span> <span style="color:#75715e"># 扫描失效服务的间隔时间（缺省为60*1000ms）</span>
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

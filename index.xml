@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>春洋笔记</title>
+    <link>http://yang101.gitee.io/</link>
+    <description>Recent content on 春洋笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 21 Jun 2020 09:19:29 +0800</lastBuildDate>
+    
+	<atom:link href="http://yang101.gitee.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tt</title>
+      <link>http://yang101.gitee.io/post/tt/</link>
+      <pubDate>Sun, 21 Jun 2020 09:19:29 +0800</pubDate>
+      
+      <guid>http://yang101.gitee.io/post/tt/</guid>
+      <description>1.初识SpringCloud 微服务是一种架构方式，最终肯定需要技术架构去实施。
+微服务的实现方式很多，但是最火的莫过于Spring Cloud了。为什么？
+后台硬：作为Spring家族的一员，有整个Spring全家桶靠山，背景十分强大。
+技术强：Spring作为Java领域的前辈，可以说是功力深厚。有强力的技术团队支撑，一般人还真比不了
+群众基础好：可以说大多数程序员的成长都伴随着Spring框架，试问：现在有几家公司开发不用Spring？SpringCloud与Spring的各个框架无缝整合，对大家来说一切都是熟悉的配方，熟悉的味道。
+使用方便：相信大家都体会到了SpringBoot给我们开发带来的便利，而SpringCloud完全支持SpringBoot的开发，用很少的配置就能完成微服务框架的搭建
+1.1简介 SpringCloud是Spring旗下的项目之一，
+Spring最擅长的就是集成，把世界上最好的框架拿过来，集成到自己的项目中。
+SpringCloud也是一样，它将现在非常流行的一些技术整合到一起，实现了诸如：配置管理，服务发现，智能路由，负载均衡，熔断器，控制总线，集群状态等等功能。其主要涉及的组件包括：
+Eureka：服务治理组件，包含服务注册中心，服务注册与发现机制的实现。（服务治理，服务注册/发现）
+Zuul：网关组件，提供智能路由，访问过滤功能
+Ribbon：客户端负载均衡的服务调用组件（客户端负载）
+Feign：服务调用，给予Ribbon和Hystrix的声明式服务调用组件 （声明式服务调用）
+Hystrix：容错管理组件，实现断路器模式，帮助服务依赖中出现的延迟和为故障提供强大的容错能力。(熔断、断路器，容错)
+架构图：
+以上只是其中一部分。
+1.2版本 因为Spring Cloud不同其他独立项目，它拥有很多子项目的大项目。所以它的版本是版本名+版本号 （如Angel.SR6）。
+版本名：是伦敦的地铁名
+版本号：SR（Service Releases）是固定的 ,大概意思是稳定版本。后面会有一个递增的数字。
+所以 Edgware.SR3就是Edgware的第3个Release版本。
+我们在项目中，会是以Finchley的版本。
+其中包含的组件，也都有各自的版本，如下表：
+   Component Edgware.SR3 Finchley.RC1 Finchley.BUILD-SNAPSHOT     spring-cloud-aws 1.2.2.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-bus 1.3.2.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-cli 1.4.1.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-commons 1.3.3.RELEASE 2.0.0.RC1 2.0.0.BUILD-SNAPSHOT   spring-cloud-contract 1.2.4.RELEASE 2.0.0.RC1 2.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://yang101.gitee.io/post/springcloud2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://yang101.gitee.io/post/springcloud2/</guid>
+      <description>1.负载均衡Ribbon 在刚才的案例中，我们启动了一个yh-service-provider，然后通过DiscoveryClient来获取服务实例信息，然后获取ip和端口来访问。
+但是实际环境中，我们往往会开启很多个yh-service-provider的集群。此时我们获取的服务列表中就会有多个，到底该访问哪一个呢？
+一般这种情况下我们就需要编写负载均衡算法，在多个实例列表中进行选择。
+不过Eureka中已经帮我们集成了负载均衡组件：Ribbon，简单修改代码即可使用。
+什么是Ribbon：
+1.1.启动两个服务实例 首先参照yh-eureka启动两个yhServiceProviderApplication实例，一个8081，一个8082。
+Eureka监控面板：
+2.2.开启负载均衡 因为Eureka中已经集成了Ribbon，所以我们无需引入新的依赖，直接修改代码。
+修改yh-service-consumer的引导类，在RestTemplate的配置方法上添加@LoadBalanced注解：
+@Bean @LoadBalanced public RestTemplate restTemplate() { return new RestTemplate(); } 修改调用方式，不再手动获取ip和端口，而是直接通过服务名称调用：
+@Controller @RequestMapping(&amp;#34;consumer/user&amp;#34;) public class UserController { @Autowired private RestTemplate restTemplate; //@Autowired  //private DiscoveryClient discoveryClient; // 注入discoveryClient，通过该客户端获取服务列表  @GetMapping @ResponseBody public User queryUserById(@RequestParam(&amp;#34;id&amp;#34;) Long id){ // 通过client获取服务提供方的服务列表，这里我们只有一个  // ServiceInstance instance = discoveryClient.getInstances(&amp;#34;service-provider&amp;#34;).get(0);  String baseUrl = &amp;#34;http://service-provider/user/&amp;#34; + id; User user = this.restTemplate.getForObject(baseUrl, User.class); return user; } } 访问页面，查看结果：</description>
+    </item>
+    
+  </channel>
+</rss>
